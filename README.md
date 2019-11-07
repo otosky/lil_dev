@@ -97,6 +97,8 @@ the 6.0.0+ that 'pyproj' - a geopandas dependency - currently needs.  Building P
 
 `pip3 install shapely fiona pyproj==1.9.6 geopandas`
 
+**reactivate bash-profile:** `source .profile`
+
 ## Step 5 - Install Database Tools
 ### Database Tools:
 
