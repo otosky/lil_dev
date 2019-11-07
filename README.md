@@ -111,12 +111,15 @@ the 6.0.0+ that 'pyproj' - a geopandas dependency - currently needs.  Building P
 - MongoDB
 
 `sudo apt install -y mongodb`
-debian repo versions are very old @v2.4.14
-The main complication with Mongo setups on Raspberry Pis has to do with the newer versions of 
-Mongo needing 64-bit operating systems while Raspbian images are currently all 32-bit operating
-systems.
 
-This might allow you to get up to v3.2: http://koenaerts.ca/compile-and-install-mongodb-on-raspberry-pi/, but I didn't think it worth the while.
+debian repo versions are very old @v2.4.14
+
+The main complication with Mongo setups on Raspberry Pis has to do with the newer versions of 
+Mongo needing 64-bit operating systems, while Raspbian images are currently all 32-bit operating
+systems.  Memory issues also play some role in this.
+
+I didn't think it worth the while, but this might allow you to get up to v3.2: 
+http://koenaerts.ca/compile-and-install-mongodb-on-raspberry-pi/.
 
 - Redis
 
