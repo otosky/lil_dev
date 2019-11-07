@@ -154,11 +154,12 @@ sudo pip3 install keras
 
 **PyTorch**:
 
-dependencies: `sudo apt install libopenblas-dev cmake cython python3-yaml`
+dependencies: 
 
-allows you to download files from Google Drive: 
+`sudo apt install libopenblas-dev cmake cython python3-yaml`
 
 ```
+# gdown allows you to download files from Google Drive
 pip3 install gdown
 gdown --id 1D3A5YSWiY-EnRWzWbzSqvj4YdY90wuXq --output torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
 pip3 install torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
@@ -166,7 +167,7 @@ pip3 install torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
 
 NOTE: this is the build for armv7 (RPI 2 & 3)
 
-[whl file on Google Drive](https://drive.google.com/file/d/1D3A5YSWiY-EnRWzWbzSqvj4YdY90wuXq/view)
+[.whl file on Google Drive](https://drive.google.com/file/d/1D3A5YSWiY-EnRWzWbzSqvj4YdY90wuXq/view)
 
 for 3B+ and later: https://devtalk.nvidia.com/default/topic/1049071/jetson-nano/pytorch-for-jetson-nano-with-new-torch2trt-converter/
 
