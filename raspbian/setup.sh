@@ -15,7 +15,6 @@ function usage()
 #--languages
 
 base=false
-databases=false
 deep=false
 deep_all=false
 geop=false
@@ -38,8 +37,6 @@ while getopts bfd-: arg; do
              extra=true
              lang=true
              misc=true
-             ;;
-        d )  databases=true 
              ;;
         - )  LONG_OPTARG="${OPTARG}"
             case $OPTARG in
@@ -69,7 +66,7 @@ done
 shift "$((OPTIND-1))" # remove parsed options and args from $@ list
 
 # basic installation
-if [ "$base" = true ] && [ "$skip_base" = false ]; then
+if [ "$base" = true ] && [ "$skip" = false ]; then
     echo -e "\nUpdating OS"
     apt -y update && sudo apt -y full-upgrade 
     echo -e "\nInstalling Basic Packages and Python Dependencies"
@@ -95,7 +92,7 @@ if [ "$base" = true ] && [ "$skip_base" = false ]; then
     apt install -y mongodb
     echo -e "\nReactivating Bash Profile"
     source ~/.profile
-elif [ "$base" = true ] && [ "$skip_base" = true ]; then
+elif [ "$base" = true ] && [ "$skip" = true ]; then
     echo "Skipping Base Install -- I hope you did it already!"
 else
     echo "-b or -f flags missing from command execution"
