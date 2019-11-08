@@ -83,7 +83,6 @@ NLP-related:
 
 `pip3 install nltk gensim textblob`
 
-
 Web-server/Database:
 - flask
 - pymongo
@@ -216,3 +215,11 @@ https://www.e-tinkers.com/2019/06/better-way-to-install-golang-go-on-raspberry-p
 
 TODO
 https://www.makeuseof.com/tag/getting-started-rust-raspberry-pi/
+
+
+chmod +x  my_script.sh //add execute permission
+./my_script.sh
+
+**OpenCV**
+
+https://linuxize.com/post/how-to-install-opencv-on-raspberry-pi/
