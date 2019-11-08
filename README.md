@@ -181,7 +181,7 @@ for 3B+ and later: https://devtalk.nvidia.com/default/topic/1049071/jetson-nano/
 ```
 sudo apt-get install openjdk-8-jdk
 wget https://downloads.lightbend.com/scala/2.12.10/scala-2.12.10.deb
-sudo dpkg -i scala-2.12.4.deb
+sudo dpkg -i scala-2.12.10.deb
 ```
 
 sbt: 
@@ -217,8 +217,11 @@ TODO
 https://www.makeuseof.com/tag/getting-started-rust-raspberry-pi/
 
 
-chmod +x  my_script.sh //add execute permission
-./my_script.sh
+chmod +x  lil_dev/raspbian/setup.sh //add execute permission
+sudo lil_dev/raspbian/setup.sh -b
+
+Basic Install Size = 
+Full Install Size = 6.2G
 
 **OpenCV**
 
