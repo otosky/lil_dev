@@ -17,7 +17,9 @@ function usage()
 base=false
 databases=false
 deep=false
-extra=false
+geop=false
+nlp=false
+xgb=false
 lang=false
 misc=false
 
@@ -37,7 +39,9 @@ while getopts bfd-: arg; do
         - )  LONG_OPTARG="${OPTARG}"
             case $OPTARG in
             deep-learning )  deep=true ;;
-            extra-python  )  extra=true ;;
+            geopandas     )  geop=true ;;
+            xgboost       )  xgb=true ;;
+            nlp           )  nlp=true ;;
             languages     )  lang=true ;;
             misc          )  misc=true ;;
             * )         echo "Illegal option --$OPTARG" >&2; exit 2 ;;
@@ -79,11 +83,19 @@ else
 fi
 
 # extra Python tools
-if [ "$extra" = true ] && [ "$base" = true ]; then
-    echo -e "\nInstalling Geopandas"
-    pip3 install shapely fiona pyproj==1.9.6 geopandas
+if [ "$nlp" = true ] && [ "$base" = true ]; then
     echo -e "\nInstalling NLP packages"
     pip3 install nltk gensim textblob
+fi
+
+if [ "$xgb" = true ] && [ "$base" = true ]; then
+    echo -e "\nInstalling xgboost"
+    pip3 install xgboost
+fi
+
+if [ "$geop" = true ] && [ "$base" = true ]; then
+    echo -e "\nInstalling Geopandas"
+    pip3 install shapely fiona pyproj==1.9.6 geopandas
 fi
 
 # other languages
