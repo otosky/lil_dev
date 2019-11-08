@@ -25,6 +25,7 @@ pytorch=false
 keras=false
 lang=false
 misc=false
+docker=false
 skip=false
 
 while getopts bfd-: arg; do
@@ -34,7 +35,10 @@ while getopts bfd-: arg; do
         f )  base=true
              databases=true
              deep=true
-             extra=true
+             deep_all=true
+             nlp=true
+             geop=true
+             xgb=true
              lang=true
              misc=true
              ;;
@@ -57,6 +61,7 @@ while getopts bfd-: arg; do
             xgboost       )  xgb=true ;;
             languages     )  lang=true ;;
             misc          )  misc=true ;;
+            docker        )  docker=true ;;
             skip_base     )  skip=true ;;
             * )         echo "Illegal option --$OPTARG" >&2; exit 2 ;;
             esac ;;
@@ -168,6 +173,8 @@ fi
 if [ "$misc" = true ] && [ "$base" = true ]; then
     # extra database tools
     apt install -y redis
+fi
+if [ "$docker" = true ] && [ "$base" = true ]; then
     # Docker
     curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
 fi
