@@ -210,7 +210,9 @@ sudo apt install nodejs
 **Golang**
 
 TODO
+https://www.e-tinkers.com/2019/06/better-way-to-install-golang-go-on-raspberry-pi/
 
 **Rust**
 
 TODO
+https://www.makeuseof.com/tag/getting-started-rust-raspberry-pi/
