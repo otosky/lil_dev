@@ -79,7 +79,7 @@ else
 fi
 
 # extra Python tools
-if [ "$extra" = true && "$base" = true ]; then
+if [ "$extra" = true ] && [ "$base" = true ]; then
     echo -e "\nInstalling Geopandas"
     pip3 install shapely fiona pyproj==1.9.6 geopandas
     echo -e "\nInstalling NLP packages"
@@ -87,7 +87,7 @@ if [ "$extra" = true && "$base" = true ]; then
 fi
 
 # other languages
-if [ "$lang" = true && "$base" = true ]; then
+if [ "$lang" = true ] && [ "$base" = true ]; then
     echo -e "\nInstalling Node.js"
     curl -sL https://deb.nodesource.com/setup_10.x | bash -
     apt install -y nodejs
@@ -104,7 +104,7 @@ if [ "$lang" = true && "$base" = true ]; then
 fi
 
 # Deep Learning tools
-if [ "$deep" = true && "$base" = true ]; then
+if [ "$deep" = true ] && [ "$base" = true ]; then
     echo -e "\nPip Installing Tensorflow 1.13.1"
     pip3 install tensorflow==1.13.1
     echo -e "\nInstalling Keras Dependencies"
@@ -122,7 +122,7 @@ if [ "$deep" = true && "$base" = true ]; then
 fi
 
 # Misc Tools
-if [ "$misc" = true && "$base" = true ]; then
+if [ "$misc" = true ] && [ "$base" = true ]; then
     # extra database tools
     apt install -y redis
     # Docker
