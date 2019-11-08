@@ -26,6 +26,7 @@ pytorch=false
 keras=false
 lang=false
 misc=false
+skip=false
 
 while getopts bfd-: arg; do
     case $arg in
@@ -59,6 +60,7 @@ while getopts bfd-: arg; do
             xgboost       )  xgb=true ;;
             languages     )  lang=true ;;
             misc          )  misc=true ;;
+            skip_base     )  skip=true ;;
             * )         echo "Illegal option --$OPTARG" >&2; exit 2 ;;
             esac ;;
         \? ) exit 2 ;;  # getopts already reported the illegal option
@@ -67,7 +69,7 @@ done
 shift "$((OPTIND-1))" # remove parsed options and args from $@ list
 
 # basic installation
-if [ "$base" = true ]; then
+if [ "$base" = true ] && [ "$skip_base" = false ]; then
     echo -e "\nUpdating OS"
     apt -y update && sudo apt -y full-upgrade 
     echo -e "\nInstalling Basic Packages and Python Dependencies"
@@ -93,6 +95,8 @@ if [ "$base" = true ]; then
     apt install -y mongodb
     echo -e "\nReactivating Bash Profile"
     source ~/.profile
+elif [ "$base" = true ] && [ "$skip_base" = true ]; then
+    echo "Skipping Base Install -- I hope you did it already!"
 else
     echo "-b or -f flags missing from command execution"
 fi
