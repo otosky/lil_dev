@@ -14,6 +14,13 @@ function usage()
 #--extra-python
 #--languages
 
+base=false
+databases=false
+deep=false
+extra=false
+lang=false
+misc=false
+
 while getopts bfd-: arg; do
     case $arg in
         b )  base=true
@@ -41,49 +48,51 @@ done
 shift "$((OPTIND-1))" # remove parsed options and args from $@ list
 
 # basic installation
-if [ base = true ]; then
-    echo "Updating OS"
+if [ "$base" = true ]; then
+    echo -e "\nUpdating OS"
     apt -y update && sudo apt -y full-upgrade 
-    echo "Installing Basic Packages and Python Dependencies"
+    echo -e "\nInstalling Basic Packages and Python Dependencies"
     apt install -y python3-pip sqlite3 git libatlas3-base libgfortran5 libpq5
-    echo "Installing Packages for Spatial Python Packages"
+    echo "\nInstalling Packages for Spatial Python Packages"
     apt install -y libspatialindex-dev xsel xclip libxml2-dev libxslt-dev libgdal-dev
-    echo "Installing Packages for Image-Based Python Packages"
-    apt install libwebpdemux2 libzstd1 libopenjp2-7 libjbig0 libtiff5 liblcms2-2 \
+    echo -e "\nInstalling Packages for Image-Based Python Packages"
+    apt install -y libwebpdemux2 libzstd1 libopenjp2-7 libjbig0 libtiff5 liblcms2-2 \
     libwebp6 libwebpmux3 libjpeg-dev zlib1g-dev libzmq-dev
-    echo "Reactivating Bash Profile"
-    source .profile
+    echo -e "\nReactivating Bash Profile"
+    source ~/.profile
     # basic Python install
-    echo "Pip installing basic SciPy stack"
+    echo -e "\nPip installing basic SciPy stack"
     pip3 install Cython jupyter numpy scipy matplotlib pandas \
     scikit-learn scikit-image seaborn
-    echo "Pip installing Web-Scraping Tools"
+    echo -e "\nPip installing Web-Scraping Tools"
     pip3 install requests selenium beautifulsoup4 Scrapy
-    echo "Pip installing database drivers & Flask"
+    echo -e "\nPip installing database drivers & Flask"
     pip3 install Flask pymongo psycopg2
-    echo "Installing PostgreSQL"
+    echo -e "\nInstalling PostgreSQL"
     apt install -y postgresql libpq-dev postgresql-client postgresql-client-common
-    echo "Installing MongoDB v2.4"
+    echo -e "\nInstalling MongoDB v2.4"
     apt install -y mongodb
-    echo "Reactivating Bash Profile"
-    source .profile
+    echo -e "\nReactivating Bash Profile"
+    source ~/.profile
 else
     echo "-b or -f flags missing from command execution"
 fi
 
 # extra Python tools
-if [ extra = true ]; then
+if [ "$extra" = true && "$base" = true ]; then
+    echo -e "\nInstalling Geopandas"
     pip3 install shapely fiona pyproj==1.9.6 geopandas
+    echo -e "\nInstalling NLP packages"
     pip3 install nltk gensim textblob
 fi
 
 # other languages
-if [ lang = true ]; then
-    echo "Installing Node.js"
+if [ "$lang" = true && "$base" = true ]; then
+    echo -e "\nInstalling Node.js"
     curl -sL https://deb.nodesource.com/setup_10.x | bash -
     apt install -y nodejs
-    echo "Installing Java/Scala"
-    apt-get install openjdk-8-jdk
+    echo -e "\nInstalling Java/Scala"
+    apt install -y openjdk-8-jdk
     wget https://downloads.lightbend.com/scala/2.12.10/scala-2.12.10.deb
     dpkg -i scala-2.12.4.deb
     rm scala-2.12.10.deb
@@ -95,25 +104,25 @@ if [ lang = true ]; then
 fi
 
 # Deep Learning tools
-if [ deep = true ]; then
-    echo "Pip Installing Tensorflow 1.13.1"
+if [ "$deep" = true && "$base" = true ]; then
+    echo -e "\nPip Installing Tensorflow 1.13.1"
     pip3 install tensorflow==1.13.1
-    echo "Installing Keras Dependencies"
+    echo -e "\nInstalling Keras Dependencies"
     apt install -y libatlas-base-dev gfortran python3-h5py
-    echo "Pip Installing Keras"
+    echo -e "\nPip Installing Keras"
     pip3 install keras
-    echo "Installing PyTorch Dependencies"
+    echo -e "\nInstalling PyTorch Dependencies"
     apt install libopenblas-dev cmake cython python3-yaml
     pip3 install gdown
     gdown --id 1D3A5YSWiY-EnRWzWbzSqvj4YdY90wuXq \
     --output torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
-    echo "Pip Installing PyTorch"
+    echo -e "\nPip Installing PyTorch"
     pip3 install torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
     rm torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
 fi
 
 # Misc Tools
-if [ misc = true ]; then
+if [ "$misc" = true && "$base" = true ]; then
     # extra database tools
     apt install -y redis
     # Docker
