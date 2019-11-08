@@ -17,9 +17,13 @@ function usage()
 base=false
 databases=false
 deep=false
+deep_all=false
 geop=false
 nlp=false
 xgb=false
+tensor=false
+pytorch=false
+keras=false
 lang=false
 misc=false
 
@@ -38,10 +42,21 @@ while getopts bfd-: arg; do
              ;;
         - )  LONG_OPTARG="${OPTARG}"
             case $OPTARG in
-            deep-learning )  deep=true ;;
+            nlp           )  nlp=true ;;
+            deep=all      )  deep=true 
+                             deep_all=true
+                             ;;
+            deep=keras    )  keras=true 
+                             deep=true
+                             ;;
+            deep=pytorch  )  pytorch=true 
+                             deep=true   
+                             ;;
+            deep=tensorflow )tensor=true 
+                             deep=true
+                             ;;
             geopandas     )  geop=true ;;
             xgboost       )  xgb=true ;;
-            nlp           )  nlp=true ;;
             languages     )  lang=true ;;
             misc          )  misc=true ;;
             * )         echo "Illegal option --$OPTARG" >&2; exit 2 ;;
@@ -56,7 +71,7 @@ if [ "$base" = true ]; then
     echo -e "\nUpdating OS"
     apt -y update && sudo apt -y full-upgrade 
     echo -e "\nInstalling Basic Packages and Python Dependencies"
-    apt install -y python3-pip sqlite3 git libatlas3-base libgfortran5 libpq5
+    apt install -y python3-pip sqlite3 cmake git libatlas3-base libgfortran5 libpq5
     echo "\nInstalling Packages for Spatial Python Packages"
     apt install -y libspatialindex-dev xsel xclip libxml2-dev libxslt-dev libgdal-dev
     echo -e "\nInstalling Packages for Image-Based Python Packages"
@@ -90,7 +105,16 @@ fi
 
 if [ "$xgb" = true ] && [ "$base" = true ]; then
     echo -e "\nInstalling xgboost"
-    pip3 install xgboost
+    cd ~
+    git clone --recursive https://github.com/dmlc/xgboost
+    cd xgboost
+    mkdir build
+    cd build
+    cmake ..
+    make -j4
+    cd ..
+    cd python-package
+    python3 setup.py install
 fi
 
 if [ "$geop" = true ] && [ "$base" = true ]; then
@@ -106,7 +130,7 @@ if [ "$lang" = true ] && [ "$base" = true ]; then
     echo -e "\nInstalling Java/Scala"
     apt install -y openjdk-8-jdk
     wget https://downloads.lightbend.com/scala/2.12.10/scala-2.12.10.deb
-    dpkg -i scala-2.12.4.deb
+    dpkg -i scala-2.12.10.deb
     rm scala-2.12.10.deb
     apt install -y apt-transport-https
     echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list
@@ -117,20 +141,26 @@ fi
 
 # Deep Learning tools
 if [ "$deep" = true ] && [ "$base" = true ]; then
-    echo -e "\nPip Installing Tensorflow 1.13.1"
-    pip3 install tensorflow==1.13.1
+    if [ "$tensor" = true ] || [ "$deep_all" = true ]; then
+        echo -e "\nPip Installing Tensorflow 1.13.1"
+        pip3 install tensorflow==1.13.1
+    fi
+    if [ "$keras" = true ] || [ "$deep_all" = true ]; then
     echo -e "\nInstalling Keras Dependencies"
     apt install -y libatlas-base-dev gfortran python3-h5py
     echo -e "\nPip Installing Keras"
     pip3 install keras
+    fi
+    if [ "$pytorch" = true ] || [ "$deep_all" = true ]; then
     echo -e "\nInstalling PyTorch Dependencies"
-    apt install libopenblas-dev cmake cython python3-yaml
+    apt install -y libopenblas-dev cmake cython python3-yaml
     pip3 install gdown
     gdown --id 1D3A5YSWiY-EnRWzWbzSqvj4YdY90wuXq \
     --output torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
     echo -e "\nPip Installing PyTorch"
     pip3 install torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
     rm torch-1.0.0a0+8322165-cp37-cp37m-linux_armv7l.whl
+    fi
 fi
 
 # Misc Tools
