@@ -1,18 +1,10 @@
 #!/bin/bash
 
+# TODO ADD usage function
 function usage()
 {
     echo "Usage : $0 [-f]"
 }
-
-# need arguments for RPI Model and full/modified install
-#arguments
-#-b --basic
-#-f --full
-#-d --databases 
-#--deep-learning 
-#--extra-python
-#--languages
 
 base=false
 deep=false
@@ -41,6 +33,7 @@ while getopts bfd-: arg; do
              xgb=true
              lang=true
              misc=true
+             docker=true
              ;;
         - )  LONG_OPTARG="${OPTARG}"
             case $OPTARG in
