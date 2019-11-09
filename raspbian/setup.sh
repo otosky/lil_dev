@@ -104,7 +104,6 @@ fi
 
 if [ "$xgb" = true ] && [ "$base" = true ]; then
     echo -e "\nInstalling xgboost"
-    cd ~
     git clone --recursive https://github.com/dmlc/xgboost
     cd xgboost
     mkdir build
@@ -170,4 +169,5 @@ fi
 if [ "$docker" = true ] && [ "$base" = true ]; then
     # Docker
     curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
+    rm get-docker.sh
 fi
